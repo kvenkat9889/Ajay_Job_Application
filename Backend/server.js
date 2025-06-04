@@ -7,13 +7,13 @@ const fs = require('fs');
 const cors = require('cors');
 
 const app = express();
-const port = process.env.PORT || 3023;
+const port = process.env.PORT || 3221;
 
 // Allow CORS from specific origins, including the artifact hosting domain for testing
 const allowedOrigins = [
-  'http://localhost:5500',
+  'http://54.166.206.245:5500',
   'http://127.0.0.1:5500',
-  `http://localhost:${port}`,
+  `http://54.166.206.245:${port}`,
   'https://artifacts.grokusercontent.com' // Added temporarily for testing
 ];
 
@@ -42,9 +42,9 @@ const projectRoot = path.join(__dirname, '..');
 // PostgreSQL setup
 const pool = new Pool({
   user: process.env.PG_USER || 'postgres',
-  host: process.env.PG_HOST || 'localhost',
+  host: process.env.PG_HOST || 'postgres',
   database: process.env.PG_DATABASE || 'new_employee_db',
-  password: process.env.PG_PASSWORD || 'Password@12345',
+  password: process.env.PG_PASSWORD || 'admin123',
   port: process.env.PG_PORT || 5432,
 });
 
@@ -471,11 +471,11 @@ function generateReferenceId() {
 // Start server
 initializeDatabase().then(() => {
   app.listen(port, () => {
-    console.log(`✅ Server running at: http://localhost:${port}`);
-    console.log(`📄 Job application form: http://localhost:${port}`);
-    console.log(`👥 HR dashboard: http://localhost:${port}/hr`);
-    console.log(`📜 Offer letter download: http://localhost:${port}/offer-letter`);
-    console.log(`🩺 Health check: http://localhost:${port}/health`);
+    console.log(`✅ Server running at: http://54.166.206.245:${port}`);
+    console.log(`📄 Job application form: http://54.166.206.245:${port}`);
+    console.log(`👥 HR dashboard: http://54.166.206.245:${port}/hr`);
+    console.log(`📜 Offer letter download: http://54.166.206.245:${port}/offer-letter`);
+    console.log(`🩺 Health check: http://54.166.206.245:${port}/health`);
   });
 }).catch(err => {
   console.error('❌ Failed to start server:', err.stack);
