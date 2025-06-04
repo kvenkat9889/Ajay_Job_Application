@@ -1,0 +1,68 @@
+# docker-compose.yml
+version: '3.8'
+
+services:
+  backend:
+    container_name: jobapp_backend
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile
+    ports:
+      - "3221:3221"
+    environment:
+      - PG_USER=postgres
+      - PG_HOST=postgres
+      - PG_DATABASE=new_employee_db
+      - PG_PASSWORD=admin123
+      - PG_PORT=5432
+    depends_on:
+      - postgres
+    volumes:
+      - ./Backend/uploads:/usr/src/app/uploads
+      - ./Backend/node_modules:/usr/src/app/node_modules
+
+  frontend:
+    container_name: jobapp_frontend
+    build:
+      context: ./Frontend
+      dockerfile: Dockerfile
+    ports:
+      - "7771:80"
+    depends_on:
+      - backend
+
+  hrpage:
+    container_name: jobapp_hrpage
+    build:
+      context: ./HR_Page
+      dockerfile: Dockerfile
+    ports:
+      - "7772:80"
+    depends_on:
+      - backend
+
+  offerletter:
+    container_name: jobapp_offerletter
+    build:
+      context: ./offerletter
+      dockerfile: Dockerfile
+    ports:
+      - "7773:80"
+    depends_on:
+      - backend
+
+  postgres:
+    container_name: jobapp_postgres
+    image: postgres:13
+    ports:
+      - "5151:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin123
+      - POSTGRES_DB=new_employee_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  postgres_data:
