@@ -11,7 +11,10 @@ const port = process.env.PORT || 3221;
 
 // Allow CORS from specific origins, including the artifact hosting domain for testing
 const allowedOrigins = [
-  'http://54.166.206.245:5500',
+  'http://54.166.206.245:7771',
+  'http://54.166.206.245:7772',
+  'http://54.166.206.245:7773',
+  'http://54.166.206.245:3221',
   'http://127.0.0.1:5500',
   `http://54.166.206.245:${port}`,
   'https://artifacts.grokusercontent.com' // Added temporarily for testing
